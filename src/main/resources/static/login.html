@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=chrome">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <meta name="google-signin-scope" content="profile email">
+  <meta name="google-signin-client_id" content="56920934061-e39v2qnmlpusl8d7f70a255jj2qubr46.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+</head>
+<body>
+
+<a href="/oauth2/authorization/google">구글 아이디로 로그인</a>
+  <a href="/oauth2/authorization/naver">네이버 아이디로 로그인</a>
+  <a href="/oauth2/authorization/kakao">카카오 아이디로 로그인</a>
+
+  <br><br>
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-6">
+        {{#userName}}
+        Logged in as: <span id="user">{{userName}}</span>
+        <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+        {{/userName}}
+        {{^userName}}
+        <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+        <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
+        {{/userName}}
+      </div>
+    </div>
+
+    <br><br>
+
+    <script>
+    function onSuccess(googleUser) {
+    console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+    }
+    function onFailure(error) {
+    console.log(error);
+    }
+    function renderButton() {
+    gapi.signin2.render('my-signin2', {
+    'scope': 'profile email',
+    'width': 240,
+    'height': 50,
+    'longtitle': true,
+    'theme': 'dark',
+    'onsuccess': onSuccess,
+    'onfailure': onFailure
+    });
+    }
+
+    var GoogleAuth; // Google Auth object.
+
+    function initClient() {
+    gapi.client.init({
+    'apiKey': 'YOUR_API_KEY',
+    'clientId': '56920934061-e39v2qnmlpusl8d7f70a255jj2qubr46.apps.googleusercontent.com',
+    'scope': 'https://www.googleapis.com/auth/drive.metadata.readonly',
+    'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
+    }).then(function () {
+    GoogleAuth = gapi.auth2.getAuthInstance();
+
+    // Listen for sign-in state changes.
+    GoogleAuth.isSignedIn.listen(updateSigninStatus);
+    });
+    }
+
+    function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+    console.log('User signed out.');
+    });
+    }
+
+    </script>
+    <div id="my-signin2"></div> <br>
+    <a href="index.html" onclick="signOut();">Sign out</a>
+  </body>
+</html>
