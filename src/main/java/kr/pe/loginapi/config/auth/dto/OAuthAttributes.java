@@ -5,6 +5,7 @@ import kr.pe.loginapi.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Getter
@@ -70,8 +71,19 @@ public class OAuthAttributes {
         return User.builder()
                 .name(name)
                 .email(email)
-                .picture(picture)
+                .imageUrl(picture)
                 .role(Role.GUEST)
                 .build();
+    }
+
+    Map<String, Object> convertToMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", nameAttributeKey);
+        map.put("key", nameAttributeKey);
+        map.put("name", name);
+        map.put("email", email);
+        map.put("picture", picture);
+
+        return map;
     }
 }

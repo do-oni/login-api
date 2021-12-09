@@ -1,10 +1,13 @@
 package kr.pe.loginapi.domain;
 
+import kr.pe.loginapi.config.auth.AuthProvider;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor
@@ -22,23 +25,41 @@ public class User extends BaseTimeEntity {
     private String email;
 
     @Column
-    private String picture;
+    private String imageUrl;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
+    @Column(nullable = false)
+    private Boolean emailVerified = false;
+
+    @JsonIgnore
+    @Column
+    private String password;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AuthProvider provider;
+
+    @Column
+    private String providerId;
+
     @Builder
-    public User(String name, String email, String picture, Role role) {
+    public User(String name, String email, String imageUrl, Role role, Boolean emailVerified, String password, AuthProvider provider, String providerId) {
         this.name = name;
         this.email = email;
-        this.picture = picture;
+        this.imageUrl = imageUrl;
         this.role = role;
+        this.emailVerified = emailVerified;
+        this.password = password;
+        this.provider = provider;
+        this.providerId = providerId;
     }
 
-    public User update(String name, String picture) {
+    public User update(String name, String imageUrl) {
         this.name = name;
-        this.picture = picture;
+        this.imageUrl = imageUrl;
 
         return this;
     }

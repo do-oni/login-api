@@ -36,6 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
-### Sensitive Data ###
-src/main/resources/application.properties
-src/main/resources/application-oauth.properties
+### Project exclude paths ###
+/.gradle/
+application.yaml
