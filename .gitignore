@@ -39,3 +39,5 @@ out/
 ### Project exclude paths ###
 /.gradle/
 application.yaml
+application.properties
+application-oauth2.properties
