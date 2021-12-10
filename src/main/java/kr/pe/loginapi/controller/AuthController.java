@@ -7,7 +7,7 @@ import kr.pe.loginapi.controller.dto.LoginRequest;
 import kr.pe.loginapi.controller.dto.SignUpRequest;
 import kr.pe.loginapi.domain.*;
 import kr.pe.loginapi.exception.BadRequestException;
-import kr.pe.loginapi.repository.UserRepository;
+import kr.pe.loginapi.repository.OAuthUserRepository;
 import kr.pe.loginapi.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
 
-    private final UserRepository userRepository;
+    private final OAuthUserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -55,7 +55,7 @@ public class AuthController {
             throw new BadRequestException("이미 해당 이메일을 사용하고 있습니다.");
         }
 
-        User result = userRepository.save(User.builder()
+        OAuthUser result = userRepository.save(OAuthUser.builder()
                 .name(signUpRequest.getName())
                 .email(signUpRequest.getEmail())
                 .password(passwordEncoder.encode(signUpRequest.getPassword()))

@@ -1,6 +1,6 @@
 package kr.pe.loginapi.config.auth.dto;
 
-import kr.pe.loginapi.domain.User;
+import kr.pe.loginapi.domain.OAuthUser;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,7 +13,7 @@ public class SessionUser implements Serializable {
     private String imageUrl;
 
     @Builder
-    public SessionUser(User user) {
+    public SessionUser(OAuthUser user) {
         this.name = user.getName();
         this.email = user.getEmail();
         this.imageUrl = user.getImageUrl();

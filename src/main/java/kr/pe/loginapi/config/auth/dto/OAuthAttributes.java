@@ -1,9 +1,10 @@
 package kr.pe.loginapi.config.auth.dto;
 
+import kr.pe.loginapi.domain.OAuthUser;
 import kr.pe.loginapi.domain.Role;
-import kr.pe.loginapi.domain.User;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,8 +68,8 @@ public class OAuthAttributes {
                 .build();
     }
 
-    public User toEntity() {
-        return User.builder()
+    public OAuthUser toEntity() {
+        return OAuthUser.builder()
                 .name(name)
                 .email(email)
                 .imageUrl(picture)

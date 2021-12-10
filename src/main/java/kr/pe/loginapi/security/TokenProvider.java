@@ -30,8 +30,7 @@ public class TokenProvider {
                 .setSubject(Long.toString(userPrincipal.getId()))
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS256,
-                        appProperties.getAuth().getTokenSecret())
+                .signWith(SignatureAlgorithm.HS512, appProperties.getAuth().getTokenSecret())
                 .compact();
     }
 
@@ -53,7 +52,7 @@ public class TokenProvider {
         } catch (MalformedJwtException ex) {
             logger.error("유효하지 않은 JWT 토큰");
 //        } catch (ExpiredJwtException ex) {
-//            logger.error("만료된 JWT 토큰");
+            logger.error("만료된 JWT 토큰");
         } catch (UnsupportedJwtException ex) {
             logger.error("지원하지 않는 JWT 토큰");
         } catch (IllegalArgumentException ex) {

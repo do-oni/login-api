@@ -11,8 +11,11 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor
+@Table(name = "oauthuser", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email")
+})
 @Entity
-public class User extends BaseTimeEntity {
+public class OAuthUser extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,18 +38,18 @@ public class User extends BaseTimeEntity {
     private Boolean emailVerified = false;
 
     @JsonIgnore
-    @Column
+//    @Column
     private String password;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private AuthProvider provider;
 
-    @Column
+//    @Column
     private String providerId;
 
     @Builder
-    public User(String name, String email, String imageUrl, Role role, Boolean emailVerified, String password, AuthProvider provider, String providerId) {
+    public OAuthUser(String name, String email, String imageUrl, Role role, Boolean emailVerified, String password, AuthProvider provider, String providerId) {
         this.name = name;
         this.email = email;
         this.imageUrl = imageUrl;
@@ -57,7 +60,7 @@ public class User extends BaseTimeEntity {
         this.providerId = providerId;
     }
 
-    public User update(String name, String imageUrl) {
+    public OAuthUser update(String name, String imageUrl) {
         this.name = name;
         this.imageUrl = imageUrl;
 
@@ -67,4 +70,5 @@ public class User extends BaseTimeEntity {
     public String getRoleKey() {
         return this.role.getKey();
     }
+
 }
